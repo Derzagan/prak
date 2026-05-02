@@ -1,0 +1,22 @@
+import os 
+from groq import Groq
+from dotenv import load_dotenv
+
+load_dotenv()
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+message = [
+    {'role': 'system', 'content': 'Ты помощник. Всегда думай пошагово перед ответом.'},
+    {'role': 'user', 'content': """Реши задачу пошагово:
+В магазине 3 коробки. В каждой 12 яблок. 
+Продали 10 яблок. Сколько осталось?"""}
+]
+
+response = client.chat.completions.create(
+    model='llama-3.1-8b-instant',
+    messages=message
+
+
+)
+
+print(response.choices[0].message.content)
